@@ -1,8 +1,13 @@
-package priv.thinkam.snake;
+package priv.thinkam.snake.model;
+
+import priv.thinkam.snake.common.AbstractSnake;
+import priv.thinkam.snake.common.Direction;
 
 import java.awt.*;
 
 /**
+ * 蛇的一节
+ *
  * @author thinkam
  * @date 2018/02/16
  */
@@ -12,7 +17,7 @@ public class SnakeSection extends AbstractSnake {
 	private int coordinateY = 0;
 	private Direction direction = Direction.RIGHT;
 	private Color color = Color.BLACK;
-	private static final int STEP = 40;
+	public static final int STEP_LENGTH = 1;
 
 	public SnakeSection() {
 	}
@@ -53,19 +58,19 @@ public class SnakeSection extends AbstractSnake {
 	}
 
 	@Override
-	void move() {
+	public void move() {
 		switch (direction) {
 			case UP:
-				coordinateY -= STEP;
+				coordinateY -= STEP_LENGTH;
 				break;
 			case DOWN:
-				coordinateY += STEP;
+				coordinateY += STEP_LENGTH;
 				break;
 			case LEFT:
-				coordinateX -= STEP;
+				coordinateX -= STEP_LENGTH;
 				break;
 			case RIGHT:
-				coordinateX += STEP;
+				coordinateX += STEP_LENGTH;
 				break;
 			default:
 		}
@@ -75,7 +80,7 @@ public class SnakeSection extends AbstractSnake {
 	public void draw(Graphics g) {
 		Color originalColor = g.getColor();
 		g.setColor(color);
-		g.fillRect(coordinateX, coordinateY, LENGTH, LENGTH);
+		g.fillOval(coordinateX, coordinateY, LENGTH, LENGTH);
 		g.setColor(originalColor);
 	}
 

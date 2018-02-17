@@ -1,4 +1,7 @@
-package priv.thinkam.snake;
+package priv.thinkam.snake.view;
+
+import priv.thinkam.snake.model.Food;
+import priv.thinkam.snake.model.Snake;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -6,17 +9,19 @@ import java.awt.event.WindowEvent;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 游戏视图
+ *
  * @author thinkam
  * @date 2018/02/16
  */
 public class GameView extends Frame {
 	private static final int COORDINATE_X = 200;
 	private static final int COORDINATE_Y = 100;
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 600;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	private static final Color BACKGROUND_COLOR = Color.CYAN;
 	private static final String TITLE = "Snake - by thinkam";
-	private static final int TIMEOUT = 200;
+	private static final int TIMEOUT = 5;
 
 	private Image offScreenImage = null;
 
@@ -39,7 +44,7 @@ public class GameView extends Frame {
 		food.draw(g);
 	}
 
-	public void startRepaintThread() {
+	private void startRepaintThread() {
 		new Thread(() -> {
 			while (true) {
 				repaint();
@@ -52,7 +57,7 @@ public class GameView extends Frame {
 		}).start();
 	}
 
-	public void init() {
+	private void init() {
 		setBounds(COORDINATE_X, COORDINATE_Y, WIDTH, HEIGHT);
 		setBackground(BACKGROUND_COLOR);
 		setTitle(TITLE);

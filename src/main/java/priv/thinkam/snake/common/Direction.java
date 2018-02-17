@@ -1,6 +1,8 @@
-package priv.thinkam.snake;
+package priv.thinkam.snake.common;
 
 /**
+ * 方向
+ *
  * @author thinkam
  * @date 2018/02/16
  */
