@@ -52,23 +52,31 @@ public class Controller {
 			DirectionEnum headDirection = snake.getHeadDirection();
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
-					if (headDirection != DirectionEnum.DOWN && headDirection != DirectionEnum.UP) {
+					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.DOWN && headDirection !=
+							DirectionEnum.UP) {
 						snake.setHeadDirection(DirectionEnum.UP);
+						snake.lockHeadDirection();
 					}
 					break;
 				case KeyEvent.VK_DOWN:
-					if (headDirection != DirectionEnum.DOWN && headDirection != DirectionEnum.UP) {
+					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.DOWN && headDirection !=
+							DirectionEnum.UP) {
 						snake.setHeadDirection(DirectionEnum.DOWN);
+						snake.lockHeadDirection();
 					}
 					break;
 				case KeyEvent.VK_LEFT:
-					if (headDirection != DirectionEnum.LEFT && headDirection != DirectionEnum.RIGHT) {
+					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.LEFT && headDirection !=
+							DirectionEnum.RIGHT) {
 						snake.setHeadDirection(DirectionEnum.LEFT);
+						snake.lockHeadDirection();
 					}
 					break;
 				case KeyEvent.VK_RIGHT:
-					if (headDirection != DirectionEnum.LEFT && headDirection != DirectionEnum.RIGHT) {
+					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.LEFT && headDirection !=
+							DirectionEnum.RIGHT) {
 						snake.setHeadDirection(DirectionEnum.RIGHT);
+						snake.lockHeadDirection();
 					}
 					break;
 				default:

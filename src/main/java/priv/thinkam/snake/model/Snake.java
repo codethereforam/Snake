@@ -22,6 +22,19 @@ public class Snake extends AbstractSnake {
 	private Food food;
 	private int step;
 	private DirectionEnum headDirection;
+	private boolean headDirectionLocked;
+
+	public boolean isHeadDirectionLocked() {
+		return headDirectionLocked;
+	}
+
+	public void lockHeadDirection() {
+		this.headDirectionLocked = true;
+	}
+
+	private void cancelLockHeadDirection() {
+		this.headDirectionLocked = false;
+	}
 
 	public Snake(Food food) {
 		this.food = food;
@@ -39,7 +52,6 @@ public class Snake extends AbstractSnake {
 			createTailSection();
 		}
 	}
-
 
 	private void addSection(SnakeSection snakeSection) {
 		sections.add(snakeSection);
@@ -63,13 +75,14 @@ public class Snake extends AbstractSnake {
 
 	@Override
 	public void move() {
-		//当蛇移动一个身位时， 判断蛇是否死亡，吃食物，改变方向
+		//当蛇移动一个身位时， 判断蛇是否死亡，吃食物，改变方向， 取消蛇头方向锁定
 		if ((step++) % (SnakeSection.LENGTH / SnakeSection.STEP_LENGTH) == 0) {
 			if (isDead()) {
 				System.exit(0);
 			}
 			eatFood(food);
-			changeDirection();
+			this.changeDirection();
+			this.cancelLockHeadDirection();
 			step = 1;
 		}
 		//蛇的每节移动一步
