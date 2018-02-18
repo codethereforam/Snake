@@ -4,8 +4,7 @@ import priv.thinkam.snake.model.Food;
 import priv.thinkam.snake.model.Snake;
 
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,10 +18,10 @@ public class GameView extends Frame {
 	private static final int COORDINATE_Y = 100;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
+
 	private static final Color BACKGROUND_COLOR = Color.CYAN;
 	private static final String TITLE = "Snake - by thinkam";
 	private static final int TIMEOUT = 5;
-
 	private Image offScreenImage = null;
 
 	private Snake snake;
@@ -44,33 +43,32 @@ public class GameView extends Frame {
 		food.draw(g);
 	}
 
-	private void startRepaintThread() {
-		new Thread(() -> {
+	/**
+	 * 开启重画线程
+	 */
+	public void startRepaintThread() {
+		Executors.newSingleThreadExecutor().execute(() -> {
 			while (true) {
 				repaint();
 				try {
 					TimeUnit.MILLISECONDS.sleep(TIMEOUT);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					break;
 				}
 			}
-		}).start();
+		});
 	}
 
+	/**
+	 * 初始化界面
+	 */
 	private void init() {
 		setBounds(COORDINATE_X, COORDINATE_Y, WIDTH, HEIGHT);
 		setBackground(BACKGROUND_COLOR);
 		setTitle(TITLE);
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
 		setResizable(false);
 		setVisible(true);
-
-		startRepaintThread();
 	}
 
 	/**

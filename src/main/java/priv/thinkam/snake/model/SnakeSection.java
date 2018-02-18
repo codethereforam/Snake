@@ -1,7 +1,7 @@
 package priv.thinkam.snake.model;
 
 import priv.thinkam.snake.common.AbstractSnake;
-import priv.thinkam.snake.common.Direction;
+import priv.thinkam.snake.common.DirectionEnum;
 
 import java.awt.*;
 
@@ -13,23 +13,19 @@ import java.awt.*;
  */
 public class SnakeSection extends AbstractSnake {
 	public static final int LENGTH = 40;
-	private int coordinateX = 0;
-	private int coordinateY = 0;
-	private Direction direction = Direction.RIGHT;
-	private Color color = Color.BLACK;
 	public static final int STEP_LENGTH = 1;
 
-	public SnakeSection() {
-	}
+	private int coordinateX;
+	private int coordinateY;
+	private DirectionEnum direction;
+	private Color color;
 
-	public SnakeSection(int coordinateX, int coordinateY, Direction direction) {
+	private Rectangle rectangle = new Rectangle(0, 0, LENGTH, LENGTH);
 
+	SnakeSection(int coordinateX, int coordinateY, DirectionEnum direction, Color color) {
 		this.coordinateX = coordinateX;
 		this.coordinateY = coordinateY;
 		this.direction = direction;
-	}
-
-	public void setColor(Color color) {
 		this.color = color;
 	}
 
@@ -37,23 +33,15 @@ public class SnakeSection extends AbstractSnake {
 		return coordinateX;
 	}
 
-	public void setCoordinateX(int coordinateX) {
-		this.coordinateX = coordinateX;
-	}
-
 	public int getCoordinateY() {
 		return coordinateY;
 	}
 
-	public void setCoordinateY(int coordinateY) {
-		this.coordinateY = coordinateY;
-	}
-
-	public Direction getDirection() {
+	public DirectionEnum getDirection() {
 		return direction;
 	}
 
-	public void setDirection(Direction direction) {
+	public void setDirection(DirectionEnum direction) {
 		this.direction = direction;
 	}
 
@@ -84,7 +72,13 @@ public class SnakeSection extends AbstractSnake {
 		g.setColor(originalColor);
 	}
 
+	/**
+	 * 获取一个矩形
+	 *
+	 * @return 蛇的一节外切矩形
+	 */
 	public Rectangle getRectangle() {
-		return new Rectangle(coordinateX, coordinateY, LENGTH, LENGTH);
+		rectangle.setLocation(coordinateX, coordinateY);
+		return this.rectangle;
 	}
 }

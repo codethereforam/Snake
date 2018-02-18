@@ -13,20 +13,29 @@ import java.util.Random;
  * @date 2018/02/16
  */
 public class Food implements Drawable {
-	public static final int LENGTH = SnakeSection.LENGTH;
-	private static Color COLOR = Color.ORANGE;
-	private int coordinateX = 80;
-	private int coordinateY = 80;
+	private static final int LENGTH = SnakeSection.LENGTH;
+	private static final Color COLOR = Color.ORANGE;
+
+	private int coordinateX;
+	private int coordinateY;
+
 	private Random random = new Random();
+	private Rectangle rectangle = new Rectangle(0, 0, LENGTH, LENGTH);
 
 	public Food() {
 		randomLocation();
 	}
 
+	/**
+	 * 重置位置
+	 */
 	public void resetLocation() {
 		randomLocation();
 	}
 
+	/**
+	 * 随机设置食物位置
+	 */
 	private void randomLocation() {
 		coordinateX = random.nextInt(GameView.WIDTH / LENGTH) * LENGTH;
 		coordinateY = random.nextInt(GameView.HEIGHT / LENGTH) * LENGTH;
@@ -40,9 +49,14 @@ public class Food implements Drawable {
 		g.setColor(originalColor);
 	}
 
+	/**
+	 * 获取一个矩形
+	 *
+	 * @return 食物的外切矩形
+	 */
 	public Rectangle getRectangle() {
-		//TODO: whether singleton
-		return new Rectangle(coordinateX, coordinateY, LENGTH, LENGTH);
+		rectangle.setLocation(coordinateX, coordinateY);
+		return rectangle;
 	}
 
 }
