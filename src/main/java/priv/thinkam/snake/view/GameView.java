@@ -4,8 +4,6 @@ import priv.thinkam.snake.model.Food;
 import priv.thinkam.snake.model.Snake;
 
 import java.awt.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 游戏视图
@@ -21,7 +19,6 @@ public class GameView extends Frame {
 
 	private static final Color BACKGROUND_COLOR = Color.CYAN;
 	private static final String TITLE = "Snake - by thinkam";
-	private static final int TIMEOUT = 5;
 	private Image offScreenImage = null;
 
 	private Snake snake;
@@ -34,30 +31,10 @@ public class GameView extends Frame {
 		init();
 	}
 
-
 	@Override
 	public void paint(Graphics g) {
 		snake.draw(g);
-		snake.move();
-
 		food.draw(g);
-	}
-
-	/**
-	 * 开启重画线程
-	 */
-	public void startRepaintThread() {
-		Executors.newSingleThreadExecutor().execute(() -> {
-			while (true) {
-				repaint();
-				try {
-					TimeUnit.MILLISECONDS.sleep(TIMEOUT);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					break;
-				}
-			}
-		});
 	}
 
 	/**

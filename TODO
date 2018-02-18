@@ -1,9 +1,8 @@
-die | stop | restart | exit
 food和snake不会重合
-stop before start
 score
 maven generate script
 配置文件
+食物改变大小
 
 注释
 重构： oop design

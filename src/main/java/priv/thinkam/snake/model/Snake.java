@@ -19,10 +19,21 @@ public class Snake extends AbstractSnake {
 	private static final int INIT_BODY_SECTION_NUM = 2;
 
 	private List<SnakeSection> sections = new LinkedList<>();
-	private Food food;
 	private int step;
 	private DirectionEnum headDirection;
 	private boolean headDirectionLocked;
+
+	public Snake() {
+		init();
+	}
+
+	public int getStep() {
+		return step;
+	}
+
+	public void setStep(int step) {
+		this.step = step;
+	}
 
 	public boolean isHeadDirectionLocked() {
 		return headDirectionLocked;
@@ -32,19 +43,13 @@ public class Snake extends AbstractSnake {
 		this.headDirectionLocked = true;
 	}
 
-	private void cancelLockHeadDirection() {
+	public void cancelLockHeadDirection() {
 		this.headDirectionLocked = false;
-	}
-
-	public Snake(Food food) {
-		this.food = food;
-
-		init();
 	}
 
 	private void init() {
 		//创建蛇头
-		SnakeSection head = new SnakeSection(0, 0, DirectionEnum.RIGHT, SnakeSectionColorEnum.HEAD_COLOR.getColor());
+		SnakeSection head = new SnakeSection(400, 200, DirectionEnum.RIGHT, SnakeSectionColorEnum.HEAD_COLOR.getColor());
 		this.addSection(head);
 		this.setHeadDirection(head.getDirection());
 		//创建蛇身
@@ -57,7 +62,7 @@ public class Snake extends AbstractSnake {
 		sections.add(snakeSection);
 	}
 
-	private SnakeSection getHead() {
+	public SnakeSection getHead() {
 		return sections.get(0);
 	}
 
@@ -75,18 +80,9 @@ public class Snake extends AbstractSnake {
 
 	@Override
 	public void move() {
-		//当蛇移动一个身位时， 判断蛇是否死亡，吃食物，改变方向， 取消蛇头方向锁定
-		if ((step++) % (SnakeSection.LENGTH / SnakeSection.STEP_LENGTH) == 0) {
-			if (isDead()) {
-				System.exit(0);
-			}
-			eatFood(food);
-			this.changeDirection();
-			this.cancelLockHeadDirection();
-			step = 1;
-		}
 		//蛇的每节移动一步
 		sections.forEach(SnakeSection::move);
+		step++;
 	}
 
 	/**
@@ -94,7 +90,7 @@ public class Snake extends AbstractSnake {
 	 *
 	 * @return true: dead; false: alive
 	 */
-	private boolean isDead() {
+	public boolean isDead() {
 		SnakeSection head = this.getHead();
 		return isOutOfBoundary(head) || isHeadHitSelf();
 	}
@@ -126,7 +122,7 @@ public class Snake extends AbstractSnake {
 		return false;
 	}
 
-	private void changeDirection() {
+	public void changeDirection() {
 		/*
 		 * 改变蛇身方向
 		 * 除蛇头外，蛇的每节方向变为前一节的方向
@@ -150,7 +146,7 @@ public class Snake extends AbstractSnake {
 	 *
 	 * @param food 食物
 	 */
-	private void eatFood(Food food) {
+	public void eatFood(Food food) {
 		if (getHead().getRectangle().intersects(food.getRectangle())) {
 			createTailSection();
 			food.resetLocation();
