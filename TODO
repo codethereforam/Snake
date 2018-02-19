@@ -1,8 +1,8 @@
 food和snake不会重合
-score
 maven generate script
 配置文件
 食物改变大小
+ConcurrentModificationException
 
 注释
 重构： oop design

@@ -21,12 +21,20 @@ import java.util.concurrent.TimeUnit;
  * @date 2018/02/16
  */
 public class Controller {
-	private static final int TIMEOUT = 5;
+	/**
+	 * 重画线程睡眠时间(ms)
+	 */
+	private static final int TIMEOUT = 2;
+	/**
+	 * 每吃一个食物增加的分数
+	 */
+	private static final int SCORE_PER_FOOD = 10;
 
 	private Food food;
 	private Snake snake;
 	private GameView view;
 	private boolean running;
+	private int score;
 
 	public static void main(String[] args) {
 		new Controller().launch();
@@ -37,9 +45,10 @@ public class Controller {
 	 */
 	private void terminate() {
 		running = false;
-		int option = JOptionPane.showConfirmDialog(view, "重新游戏", "结束", JOptionPane.YES_NO_OPTION);
+		int option = JOptionPane.showConfirmDialog(view, "重新游戏", "得分：" + score, JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
 			view.setVisible(false);
+			resetScore();
 			this.launch();
 		} else {
 			System.exit(0);
@@ -74,7 +83,10 @@ public class Controller {
 					if (snake.isDead()) {
 						this.terminate();
 					}
-					snake.eatFood(food);
+					boolean success = snake.eatFood(food);
+					if (success) {
+						addScore();
+					}
 					snake.changeDirection();
 					snake.cancelLockHeadDirection();
 					snake.setStep(0);
@@ -89,6 +101,16 @@ public class Controller {
 				}
 			}
 		});
+	}
+
+	private void addScore() {
+		this.score += SCORE_PER_FOOD;
+		view.setTitle(GameView.BASE_TITLE + score);
+	}
+
+	private void resetScore() {
+		this.score = 0;
+		view.setTitle(GameView.BASE_TITLE + score);
 	}
 
 	/**

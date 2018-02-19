@@ -6,7 +6,7 @@ import priv.thinkam.snake.common.SnakeSectionColorEnum;
 import priv.thinkam.snake.view.GameView;
 
 import java.awt.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ import java.util.List;
 public class Snake extends AbstractSnake {
 	private static final int INIT_BODY_SECTION_NUM = 2;
 
-	private List<SnakeSection> sections = new LinkedList<>();
+	private List<SnakeSection> sections = new ArrayList<>();
 	private int step;
 	private DirectionEnum headDirection;
 	private boolean headDirectionLocked;
@@ -145,12 +145,15 @@ public class Snake extends AbstractSnake {
 	 * 吃食物
 	 *
 	 * @param food 食物
+	 * @return true: 吃到食物
 	 */
-	public void eatFood(Food food) {
+	public boolean eatFood(Food food) {
 		if (getHead().getRectangle().intersects(food.getRectangle())) {
 			createTailSection();
 			food.resetLocation();
+			return true;
 		}
+		return false;
 	}
 
 	/**

@@ -18,7 +18,7 @@ public class GameView extends Frame {
 	public static final int HEIGHT = 600;
 
 	private static final Color BACKGROUND_COLOR = Color.CYAN;
-	private static final String TITLE = "Snake - by thinkam";
+	public static final String BASE_TITLE = "Snake - by thinkam | score: ";
 	private Image offScreenImage = null;
 
 	private Snake snake;
@@ -43,7 +43,7 @@ public class GameView extends Frame {
 	private void init() {
 		setBounds(COORDINATE_X, COORDINATE_Y, WIDTH, HEIGHT);
 		setBackground(BACKGROUND_COLOR);
-		setTitle(TITLE);
+		setTitle(BASE_TITLE + "0");
 		setResizable(false);
 		setVisible(true);
 	}
