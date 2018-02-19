@@ -24,7 +24,7 @@ public class Controller {
 	/**
 	 * 重画线程睡眠时间(ms)
 	 */
-	private static final int TIMEOUT = 2;
+	private static final int TIMEOUT = 3;
 	/**
 	 * 每吃一个食物增加的分数
 	 */
@@ -61,6 +61,10 @@ public class Controller {
 	private void launch() {
 		food = new Food();
 		snake = new Snake();
+		//保证蛇和食物不相交
+		while (snake.intersects(food)) {
+			food.resetLocation();
+		}
 		view = new GameView(snake, food);
 		view.addWindowListener(new WindowAdapter() {
 			@Override
@@ -83,8 +87,13 @@ public class Controller {
 					if (snake.isDead()) {
 						this.terminate();
 					}
-					boolean success = snake.eatFood(food);
+					boolean success = snake.canEatFood(food);
 					if (success) {
+						snake.createTailSection();
+						//保证蛇和食物不相交
+						do {
+							food.resetLocation();
+						} while (snake.intersects(food));
 						addScore();
 					}
 					snake.changeDirection();

@@ -142,24 +142,19 @@ public class Snake extends AbstractSnake {
 	}
 
 	/**
-	 * 吃食物
+	 * 能否吃到食物
 	 *
 	 * @param food 食物
 	 * @return true: 吃到食物
 	 */
-	public boolean eatFood(Food food) {
-		if (getHead().getRectangle().intersects(food.getRectangle())) {
-			createTailSection();
-			food.resetLocation();
-			return true;
-		}
-		return false;
+	public boolean canEatFood(Food food) {
+		return getHead().getRectangle().intersects(food.getRectangle());
 	}
 
 	/**
 	 * 在蛇的尾部创建一节，并且方向和前一节一致
 	 */
-	private void createTailSection() {
+	public void createTailSection() {
 		SnakeSection tail = this.getTail();
 		SnakeSection section = null;
 		DirectionEnum tailDirection = tail.getDirection();
@@ -184,5 +179,21 @@ public class Snake extends AbstractSnake {
 			default:
 		}
 		sections.add(section);
+	}
+
+	/**
+	 * 判断蛇和食物相交
+	 *
+	 * @param food 食物
+	 * @return true: 相交
+	 */
+	public boolean intersects(Food food) {
+		for (SnakeSection section : sections) {
+			if (section.getCoordinateX() == food.getCoordinateX() &&
+					section.getCoordinateY() == food.getCoordinateY()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

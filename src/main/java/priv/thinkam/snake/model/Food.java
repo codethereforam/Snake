@@ -26,6 +26,14 @@ public class Food implements Drawable {
 		randomLocation();
 	}
 
+	public int getCoordinateX() {
+		return coordinateX;
+	}
+
+	public int getCoordinateY() {
+		return coordinateY;
+	}
+
 	/**
 	 * 重置位置
 	 */
