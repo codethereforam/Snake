@@ -58,7 +58,7 @@
                     <programs>
                         <program>
                             <mainClass>priv.thinkam.snake.controller.Controller</mainClass>
-                            <name>Snake</name>
+                            <id>Snake</id>
                         </program>
                     </programs>
                 </configuration>

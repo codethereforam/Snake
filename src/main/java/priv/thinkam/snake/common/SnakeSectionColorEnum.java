@@ -3,6 +3,7 @@ package priv.thinkam.snake.common;
 import java.awt.*;
 
 /**
+ * 蛇的一节的颜色
  * @author thinkam
  * @date 2018/02/18
  */
