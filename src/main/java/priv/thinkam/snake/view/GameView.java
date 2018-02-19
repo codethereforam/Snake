@@ -1,5 +1,6 @@
 package priv.thinkam.snake.view;
 
+import priv.thinkam.snake.common.Drawable;
 import priv.thinkam.snake.model.Food;
 import priv.thinkam.snake.model.Snake;
 
@@ -33,8 +34,12 @@ public class GameView extends Frame {
 
 	@Override
 	public void paint(Graphics g) {
-		snake.draw(g);
-		food.draw(g);
+		this.draw(snake, g);
+		this.draw(food, g);
+	}
+
+	private void draw(Drawable drawable, Graphics g) {
+		drawable.draw(g);
 	}
 
 	/**
