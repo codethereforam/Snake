@@ -25,7 +25,7 @@ public class Controller {
 	/**
 	 * 重画线程睡眠时间(ms)
 	 */
-	private static final int TIMEOUT = 3;
+	private static final int TIMEOUT = 2;
 	/**
 	 * 每吃一个食物增加的分数
 	 */
@@ -150,28 +150,28 @@ public class Controller {
 			DirectionEnum headDirection = snake.getHeadDirection();
 			switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
-					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.DOWN && headDirection !=
+					if (snake.isHeadDirectionNotLocked() && headDirection != DirectionEnum.DOWN && headDirection !=
 							DirectionEnum.UP) {
 						snake.setHeadDirection(DirectionEnum.UP);
 						snake.lockHeadDirection();
 					}
 					break;
 				case KeyEvent.VK_DOWN:
-					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.DOWN && headDirection !=
+					if (snake.isHeadDirectionNotLocked() && headDirection != DirectionEnum.DOWN && headDirection !=
 							DirectionEnum.UP) {
 						snake.setHeadDirection(DirectionEnum.DOWN);
 						snake.lockHeadDirection();
 					}
 					break;
 				case KeyEvent.VK_LEFT:
-					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.LEFT && headDirection !=
+					if (snake.isHeadDirectionNotLocked() && headDirection != DirectionEnum.LEFT && headDirection !=
 							DirectionEnum.RIGHT) {
 						snake.setHeadDirection(DirectionEnum.LEFT);
 						snake.lockHeadDirection();
 					}
 					break;
 				case KeyEvent.VK_RIGHT:
-					if (!snake.isHeadDirectionLocked() && headDirection != DirectionEnum.LEFT && headDirection !=
+					if (snake.isHeadDirectionNotLocked() && headDirection != DirectionEnum.LEFT && headDirection !=
 							DirectionEnum.RIGHT) {
 						snake.setHeadDirection(DirectionEnum.RIGHT);
 						snake.lockHeadDirection();

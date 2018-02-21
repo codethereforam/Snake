@@ -38,8 +38,8 @@ public class Snake extends AbstractSnake {
 		this.step = 0;
 	}
 
-	public boolean isHeadDirectionLocked() {
-		return headDirectionLocked;
+	public boolean isHeadDirectionNotLocked() {
+		return !headDirectionLocked;
 	}
 
 	public void lockHeadDirection() {
