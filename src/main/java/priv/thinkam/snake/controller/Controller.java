@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -30,29 +31,50 @@ public class Controller {
 	 */
 	private static final int SCORE_PER_FOOD = 10;
 
+	private ExecutorService threadPool = Executors.newSingleThreadExecutor();
+
 	private Food food;
 	private Snake snake;
 	private GameView view;
 	private boolean running;
 	private int score;
 
+	private Controller() {
+		initView();
+	}
+
 	public static void main(String[] args) {
 		new Controller().launch();
+	}
+
+	private void initView() {
+		view = new GameView();
+		view.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		view.addKeyListener(new KeyMonitor());
 	}
 
 	/**
 	 * 结束游戏
 	 */
-	private void terminate() {
+	private void gameOver() {
 		running = false;
 		int option = JOptionPane.showConfirmDialog(view, "重新游戏", "得分：" + score, JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
-			view.setVisible(false);
-			resetScore();
-			this.launch();
+			this.restart();
 		} else {
 			System.exit(0);
 		}
+	}
+
+	private void restart() {
+		resetScore();
+		this.launch();
+		view.repaint();
 	}
 
 	/**
@@ -62,14 +84,7 @@ public class Controller {
 		food = new Food();
 		snake = new Snake();
 		makeFoodNotIntersectSnake();
-		view = new GameView(snake, food);
-		view.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		view.addKeyListener(new KeyMonitor());
+		view.setSnakeAndFood(snake, food);
 	}
 
 	/**
@@ -85,13 +100,14 @@ public class Controller {
 	 * 开启重画线程
 	 */
 	private void startRepaintThread() {
-		Executors.newSingleThreadExecutor().execute(() -> {
+		threadPool.execute(() -> {
 			while (running) {
 				snake.move();
 				//当蛇移动一个身位时，判断死亡，吃食物，改变方向， 取消蛇头方向锁定
 				if (snake.getStep() % (SnakeSection.LENGTH / SnakeSection.STEP_LENGTH) == 0) {
 					if (snake.isDead()) {
-						this.terminate();
+						this.gameOver();
+						continue;
 					}
 					boolean success = snake.canEatFood(food);
 					if (success) {

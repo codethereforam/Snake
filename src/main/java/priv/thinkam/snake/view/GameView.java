@@ -25,11 +25,13 @@ public class GameView extends Frame {
 	private Snake snake;
 	private Food food;
 
-	public GameView(Snake snake, Food food) throws HeadlessException {
+	public GameView() throws HeadlessException {
+		init();
+	}
+
+	public void setSnakeAndFood(Snake snake, Food food) {
 		this.snake = snake;
 		this.food = food;
-
-		init();
 	}
 
 	@Override
