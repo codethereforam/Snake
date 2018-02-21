@@ -52,7 +52,11 @@ public class Snake extends AbstractSnake {
 
 	private void init() {
 		//创建蛇头
-		SnakeSection head = new SnakeSection(400, 200, DirectionEnum.RIGHT, SnakeSectionColorEnum.HEAD_COLOR);
+		SnakeSection head = new SnakeSection.Builder()
+				.setLocation(400, 200)
+				.setDirection(DirectionEnum.RIGHT)
+				.setColor(SnakeSectionColorEnum.HEAD_COLOR)
+				.build();
 		this.addSection(head);
 		this.setHeadDirection(head.getDirection());
 		//创建蛇身
@@ -159,29 +163,26 @@ public class Snake extends AbstractSnake {
 	 */
 	public void createTailSection() {
 		SnakeSection tail = this.getTail();
-		SnakeSection section = null;
 		DirectionEnum tailDirection = tail.getDirection();
-		SnakeSectionColorEnum tailColor = SnakeSectionColorEnum.BODY_COLOR;
+		SnakeSection.Builder sectionBuilder = new SnakeSection.Builder()
+				.setDirection(tailDirection)
+				.setColor(SnakeSectionColorEnum.BODY_COLOR);
 		switch (tailDirection) {
 			case UP:
-				section = new SnakeSection(tail.getCoordinateX(), tail.getCoordinateY() + SnakeSection.LENGTH,
-						tailDirection, tailColor);
+				sectionBuilder.setLocation(tail.getCoordinateX(), tail.getCoordinateY() + SnakeSection.LENGTH);
 				break;
 			case DOWN:
-				section = new SnakeSection(tail.getCoordinateX(), tail.getCoordinateY() - SnakeSection.LENGTH,
-						tailDirection, tailColor);
+				sectionBuilder.setLocation(tail.getCoordinateX(), tail.getCoordinateY() - SnakeSection.LENGTH);
 				break;
 			case LEFT:
-				section = new SnakeSection(tail.getCoordinateX() + SnakeSection.LENGTH, tail.getCoordinateY(),
-						tailDirection, tailColor);
+				sectionBuilder.setLocation(tail.getCoordinateX() + SnakeSection.LENGTH, tail.getCoordinateY());
 				break;
 			case RIGHT:
-				section = new SnakeSection(tail.getCoordinateX() - SnakeSection.LENGTH, tail.getCoordinateY(),
-						tailDirection, tailColor);
+				sectionBuilder.setLocation(tail.getCoordinateX() - SnakeSection.LENGTH, tail.getCoordinateY());
 				break;
 			default:
 		}
-		sections.add(section);
+		sections.add(sectionBuilder.build());
 	}
 
 	/**

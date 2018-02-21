@@ -23,11 +23,11 @@ public class SnakeSection extends AbstractSnake {
 
 	private Rectangle rectangle = new Rectangle(0, 0, LENGTH, LENGTH);
 
-	SnakeSection(int coordinateX, int coordinateY, DirectionEnum direction, SnakeSectionColorEnum colorEnum) {
-		this.coordinateX = coordinateX;
-		this.coordinateY = coordinateY;
-		this.direction = direction;
-		this.color = colorEnum.getColor();
+	private SnakeSection(Builder builder) {
+		this.coordinateX = builder.coordinateX;
+		this.coordinateY = builder.coordinateY;
+		this.direction = builder.direction;
+		this.color = builder.color;
 	}
 
 	public int getCoordinateX() {
@@ -81,5 +81,32 @@ public class SnakeSection extends AbstractSnake {
 	public Rectangle getRectangle() {
 		rectangle.setLocation(coordinateX, coordinateY);
 		return this.rectangle;
+	}
+
+	static class Builder {
+		private int coordinateX;
+		private int coordinateY;
+		private DirectionEnum direction;
+		private Color color;
+
+		public Builder setLocation(int coordinateX, int coordinateY) {
+			this.coordinateX = coordinateX;
+			this.coordinateY = coordinateY;
+			return this;
+		}
+
+		public Builder setDirection(DirectionEnum direction) {
+			this.direction = direction;
+			return this;
+		}
+
+		public Builder setColor(SnakeSectionColorEnum colorEnum) {
+			this.color = colorEnum.getColor();
+			return this;
+		}
+
+		public SnakeSection build() {
+			return new SnakeSection(this);
+		}
 	}
 }
