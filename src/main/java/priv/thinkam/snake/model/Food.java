@@ -22,10 +22,6 @@ public class Food implements Drawable {
 	private Random random = new Random();
 	private Rectangle rectangle = new Rectangle(0, 0, LENGTH, LENGTH);
 
-	public Food() {
-		randomLocation();
-	}
-
 	public int getCoordinateX() {
 		return coordinateX;
 	}
@@ -35,16 +31,9 @@ public class Food implements Drawable {
 	}
 
 	/**
-	 * 重置位置
-	 */
-	public void resetLocation() {
-		randomLocation();
-	}
-
-	/**
 	 * 随机设置食物位置
 	 */
-	private void randomLocation() {
+	public void randomLocation() {
 		coordinateX = random.nextInt(GameView.WIDTH / LENGTH) * LENGTH;
 		coordinateY = random.nextInt(GameView.HEIGHT / LENGTH) * LENGTH;
 	}

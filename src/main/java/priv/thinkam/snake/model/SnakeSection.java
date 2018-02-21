@@ -2,6 +2,7 @@ package priv.thinkam.snake.model;
 
 import priv.thinkam.snake.common.AbstractSnake;
 import priv.thinkam.snake.common.DirectionEnum;
+import priv.thinkam.snake.common.SnakeSectionColorEnum;
 
 import java.awt.*;
 
@@ -22,11 +23,11 @@ public class SnakeSection extends AbstractSnake {
 
 	private Rectangle rectangle = new Rectangle(0, 0, LENGTH, LENGTH);
 
-	SnakeSection(int coordinateX, int coordinateY, DirectionEnum direction, Color color) {
+	SnakeSection(int coordinateX, int coordinateY, DirectionEnum direction, SnakeSectionColorEnum colorEnum) {
 		this.coordinateX = coordinateX;
 		this.coordinateY = coordinateY;
 		this.direction = direction;
-		this.color = color;
+		this.color = colorEnum.getColor();
 	}
 
 	public int getCoordinateX() {

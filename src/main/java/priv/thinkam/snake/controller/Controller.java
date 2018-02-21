@@ -61,10 +61,7 @@ public class Controller {
 	private void launch() {
 		food = new Food();
 		snake = new Snake();
-		//保证蛇和食物不相交
-		while (snake.intersects(food)) {
-			food.resetLocation();
-		}
+		makeFoodNotIntersectSnake();
 		view = new GameView(snake, food);
 		view.addWindowListener(new WindowAdapter() {
 			@Override
@@ -73,6 +70,15 @@ public class Controller {
 			}
 		});
 		view.addKeyListener(new KeyMonitor());
+	}
+
+	/**
+	 * 保证蛇和食物不相交
+	 */
+	private void makeFoodNotIntersectSnake() {
+		do {
+			food.randomLocation();
+		} while (snake.intersects(food));
 	}
 
 	/**
@@ -90,15 +96,12 @@ public class Controller {
 					boolean success = snake.canEatFood(food);
 					if (success) {
 						snake.createTailSection();
-						//保证蛇和食物不相交
-						do {
-							food.resetLocation();
-						} while (snake.intersects(food));
+						makeFoodNotIntersectSnake();
 						addScore();
 					}
 					snake.changeDirection();
 					snake.cancelLockHeadDirection();
-					snake.setStep(0);
+					snake.resetStepToZero();
 				}
 				view.repaint();
 

@@ -31,8 +31,11 @@ public class Snake extends AbstractSnake {
 		return step;
 	}
 
-	public void setStep(int step) {
-		this.step = step;
+	/**
+	 * 将步数重置为0
+	 */
+	public void resetStepToZero() {
+		this.step = 0;
 	}
 
 	public boolean isHeadDirectionLocked() {
@@ -49,7 +52,7 @@ public class Snake extends AbstractSnake {
 
 	private void init() {
 		//创建蛇头
-		SnakeSection head = new SnakeSection(400, 200, DirectionEnum.RIGHT, SnakeSectionColorEnum.HEAD_COLOR.getColor());
+		SnakeSection head = new SnakeSection(400, 200, DirectionEnum.RIGHT, SnakeSectionColorEnum.HEAD_COLOR);
 		this.addSection(head);
 		this.setHeadDirection(head.getDirection());
 		//创建蛇身
@@ -158,7 +161,7 @@ public class Snake extends AbstractSnake {
 		SnakeSection tail = this.getTail();
 		SnakeSection section = null;
 		DirectionEnum tailDirection = tail.getDirection();
-		Color tailColor = SnakeSectionColorEnum.BODY_COLOR.getColor();
+		SnakeSectionColorEnum tailColor = SnakeSectionColorEnum.BODY_COLOR;
 		switch (tailDirection) {
 			case UP:
 				section = new SnakeSection(tail.getCoordinateX(), tail.getCoordinateY() + SnakeSection.LENGTH,
